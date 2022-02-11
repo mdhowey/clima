@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.devhowey.clima">
+    <!--  permissions for geolocation in android to get user location  -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
    <application
         android:label="clima"
         android:name="${applicationName}"
