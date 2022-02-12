@@ -1,5 +1,5 @@
+import 'package:clima/services/location.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -9,24 +9,31 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   // querying to get user geolocation; works for iOS and Android devices
   void getLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-        // more accuracy translates to more battery being used on users device
-        desiredAccuracy: LocationAccuracy.low);
-    // TODO: Delete print() before production build
-    print(position);
+    Location location = Location();
+    await location.getCurrentLocation();
+    print(location.latitude);
+    print(location.longitude);
+  }
+
+  void initState() {
+    super.initState();
+    getLocation();
   }
 
   @override
   Widget build(BuildContext context) {
+    String myMargin = '50';
+    double? myMarginAsADouble;
+
+    try {
+      myMarginAsADouble = double.parse(myMargin);
+    } catch (e) {
+      print(e);
+    }
     return Scaffold(
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            //Get the current location
-            getLocation();
-          },
-          child: const Text('Get Location'),
-        ),
+      body: Container(
+        margin: EdgeInsets.all(myMarginAsADouble ?? 30.0),
+        color: Colors.green,
       ),
     );
   }
