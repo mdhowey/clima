@@ -68,17 +68,17 @@ class _LocationScreenState extends State<LocationScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  FlatButton(
+                  IconButton(
                     onPressed: () async {
                       var weatherData = await weather.getLocationWeather();
                       updateUI(weatherData);
                     },
-                    child: const Icon(
+                    icon: const Icon(
                       Icons.near_me,
                       size: 50.0,
                     ),
                   ),
-                  FlatButton(
+                  IconButton(
                     onPressed: () async {
                       var typedName = await Navigator.push(
                         context,
@@ -90,11 +90,13 @@ class _LocationScreenState extends State<LocationScreen> {
                       );
                       if (typedName != null) {
                         var weatherData =
-                            await weather.getCityWeather(typedName);
+                            // TODO: dynamically select forecast type
+                            // second @param of getCityWeather
+                            await weather.getCityWeather(typedName, 'weather');
                         updateUI(weatherData);
                       }
                     },
-                    child: const Icon(
+                    icon: const Icon(
                       Icons.location_city,
                       size: 50.0,
                     ),
