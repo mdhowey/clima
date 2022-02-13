@@ -3,7 +3,7 @@ import 'package:clima/services/networking.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 String? apiKey = dotenv.env['API_KEY'];
-const openWeatherApiURI = 'https://api.openweathermap.org/data/2.5/';
+const openWeatherApiURI = 'https://api.openweathermap.org/data/2.5';
 
 class WeatherModel {
   /// Calls OpenWeather API for current weather in specified city
@@ -11,8 +11,9 @@ class WeatherModel {
   /// @param [cityName] The name of the city
   /// @return [weatherData] JSON object response from OpenWeather API
   Future<dynamic> getCityWeather(String cityName, String forecastType) async {
+    forecastType = 'weather';
     var url =
-        '$openWeatherApiURI$forecastType?q=$cityName&appid=$apiKey&units=metric';
+        '$openWeatherApiURI/$forecastType?q=$cityName&appid=$apiKey&units=metric';
     NetworkHelper networkHelper = NetworkHelper(url);
 
     var weatherData = await networkHelper.getData();
@@ -23,12 +24,13 @@ class WeatherModel {
   /// current location
   ///
   /// @returns [weatherData] The current weather for the current location
-  Future<dynamic> getLocationWeather() async {
+  // TODO: determine if [String forecastType] is needed based on response from 5-day forecast
+  Future<dynamic> getLocationWeather(String forecastType) async {
     Location location = Location();
     await location.getCurrentLocation();
 
     NetworkHelper networkHelper = NetworkHelper(
-        '$openWeatherApiURI?lat=${location.latitude}&lon=${location.longitude}&appid=$apiKey&units=metric');
+        '$openWeatherApiURI/$forecastType?lat=${location.latitude}&lon=${location.longitude}&appid=$apiKey&units=metric');
 
     var weatherData = await networkHelper.getData();
 

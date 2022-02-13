@@ -70,7 +70,9 @@ class _LocationScreenState extends State<LocationScreen> {
                 children: <Widget>[
                   IconButton(
                     onPressed: () async {
-                      var weatherData = await weather.getLocationWeather();
+                      var weatherData =
+                          //TODO: dynamically select [String forecastType] in getLocationWeather()
+                          await weather.getLocationWeather('forecast');
                       updateUI(weatherData);
                     },
                     icon: const Icon(
@@ -90,8 +92,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       );
                       if (typedName != null) {
                         var weatherData =
-                            // TODO: dynamically select forecast type
-                            // second @param of getCityWeather
+                            //TODO: dynamically select [String forecastType] in getCityWeather()
                             await weather.getCityWeather(typedName, 'weather');
                         updateUI(weatherData);
                       }

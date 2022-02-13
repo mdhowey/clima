@@ -17,7 +17,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   // querying to get user geolocation; works for iOS and Android devices
   void getLocationData() async {
-    var weatherData = await WeatherModel().getLocationWeather();
+    //TODO: dynamically select [String forecastType] in getLocationWeather()
+    var weatherData = await WeatherModel().getLocationWeather('weather');
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return LocationScreen(
